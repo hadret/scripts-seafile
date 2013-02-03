@@ -15,13 +15,13 @@
 ### END INIT INFO
 
 
-APP_ROOT="/home/seafile/seafile"
+APP_ROOT="/home/seafile/seafile/seafile-server-1.4.5"
 SEAFILE_PID="/tmp/seafile-*server.pid"
-SEAHUB_PID="$APP_ROOT/seafile-server-1.4.5/runtime/seahub.pid"
-STOP_SEAFILE="$APP_ROOT/seafile-server-1.4.5/seafile.sh stop"
-START_SEAFILE="$APP_ROOT/seafile-server-1.4.5/seafile.sh start"
-STOP_SEAHUB="$APP_ROOT/seafile-server-1.4.5/seahub.sh stop"
-START_SEAHUB="$APP_ROOT/seafile-server-1.4.5/seahub.sh start-fastcgi"
+SEAHUB_PID="$APP_ROOT/runtime/seahub.pid"
+STOP_SEAFILE="$APP_ROOT/seafile.sh stop"
+START_SEAFILE="$APP_ROOT/seafile.sh start"
+STOP_SEAHUB="$APP_ROOT/seahub.sh stop"
+START_SEAHUB="$APP_ROOT/seahub.sh start-fastcgi"
 NAME="seafile"
 DESC="Seafile service"
 
