@@ -1,0 +1,131 @@
+#! /bin/bash
+
+# SEAFILE
+# Maintainer: @hadret
+# App Version: 1.4.5
+
+### BEGIN INIT INFO
+# Provides:          seafile
+# Required-Start:    $local_fs $remote_fs $network $syslog nginx mysql
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Seafile synchronization and collaboration
+# Description:       Seafile synchronization and collaboration
+### END INIT INFO
+
+
+APP_ROOT="/home/seafile/seafile"
+SEAFILE_PID="/tmp/seafile-*server.pid"
+SEAHUB_PID="$APP_ROOT/seafile-server-1.4.5/runtime/seahub.pid"
+STOP_SEAFILE="$APP_ROOT/seafile-server-1.4.5/seafile.sh stop"
+START_SEAFILE="$APP_ROOT/seafile-server-1.4.5/seafile.sh start"
+STOP_SEAHUB="$APP_ROOT/seafile-server-1.4.5/seahub.sh stop"
+START_SEAHUB="$APP_ROOT/seafile-server-1.4.5/seahub.sh start-fastcgi"
+NAME="seafile"
+DESC="Seafile service"
+
+check_pid(){
+  if [ -f $SEAFILE_PID ]; then
+    PID=`cat $SEAFILE_PID`
+    SPID=`cat $SEAHUB_PID`
+    STATUS=`ps aux | grep $PID | grep -v grep | wc -l`
+  else
+    STATUS=0
+    PID=0
+  fi
+}
+
+start() {
+  cd $APP_ROOT
+  check_pid
+  if [ "$PID" -ne 0 -a "$STATUS" -ne 0 ]; then
+    # Program is running, exit with error code 1.
+    echo "Error! $DESC $NAME is currently running!"
+    exit 1
+  else
+    if [ `whoami` = root ]; then
+      sudo -u seafile -H bash -l -c "$START_SEAFILE"
+      sudo -u seafile -H bash -l -c "$START_SEAHUB"
+      echo "$DESC started"
+    fi
+  fi
+}
+
+stop() {
+  cd $APP_ROOT
+  check_pid
+  if [ "$PID" -ne 0 -a "$STATUS" -ne 0 ]; then
+    ## Program is running, stop it.
+    sudo -u seafile -H bash -l -c "$STOP_SEAHUB"
+    sleep 5
+    sudo -u seafile -H bash -l -c "$STOP_SEAFILE"
+    ## Remove PIDs.
+    rm /tmp/seafile*.pid >> /dev/null
+    echo "$DESC stopped"
+  else
+    ## Program is not running, exit with error.
+    echo "Error! $DESC not started!"
+    exit 1
+  fi
+}
+
+restart() {
+  cd $APP_ROOT
+  check_pid
+  if [ "$PID" -ne 0 -a "$STATUS" -ne 0 ]; then
+    echo "Restarting $DESC..."
+    sudo -u seafile -H bash -l -c "$STOP_SEAHUB"
+    sleep 5
+    sudo -u seafile -H bash -l -c "$STOP_SEAFILE"
+    rm /tmp/seafile*.pid >> /dev/null
+    if [ `whoami` = root ]; then
+      sudo -u seafile -H bash -l -c "$START_SEAFILE"
+      sudo -u seafile -H bash -l -c "$START_SEAHUB"
+    fi
+    echo "$DESC restarted."
+  else
+    echo "Error, $NAME not running!"
+    exit 1
+  fi
+}
+
+status() {
+  cd $APP_ROOT
+  check_pid
+  if [ "$PID" -ne 0 -a "$STATUS" -ne 0 ]; then
+    echo "$DESC / Seafile with PID $PID is running."
+    echo "$DESC / Seahub with PID $SPID is running."
+  else
+    echo "$DESC is not running."
+    exit 1
+  fi
+}
+
+## Check to see if we are running as root first.
+## Found at http://www.cyberciti.biz/tips/shell-root-user-check-script.html
+if [ "$(id -u)" != "0" ]; then
+    echo "This script must be run as root"
+    exit 1
+fi
+
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  restart)
+        restart
+        ;;
+  status)
+        status
+        ;;
+  *)
+        echo "Usage: sudo service seafile {start|stop|restart|status}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0
