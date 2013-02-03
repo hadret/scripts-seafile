@@ -14,10 +14,15 @@ Fairly straight-forward. If you need latest available release, type:
     sudo chmod +x /etc/init.d/seafile
     sudo update-rc.d seafile defaults 21
 
-If you are aiming into some particular version, check out available [branches]() and modify link accordingly. Here's an example for stable-1.4.5 branch:
+If you are aiming into some particular version, check out available [branches](https://github.com/hadret/Scripts/branches) and modify link accordingly. Here's an example for stable-1.4.5 branch:
 
     sudo wget https://github.com/hadret/Scripts/raw/stable-1.4.5/seafile/seafile -O /etc/init.d/seafile
 
 * * *
 
+AUTHORS
+=======
 
+* Filip "Hadret" Chabik <hadret@gmail.com>
+
+_(Remember to add yourself when pull requesting)._
