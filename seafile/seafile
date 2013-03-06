@@ -2,7 +2,7 @@
 
 # SEAFILE
 # Maintainer: @hadret
-# App Version: 1.4.5
+# App Version: 1.5.0
 
 ### BEGIN INIT INFO
 # Provides:          seafile
@@ -15,7 +15,7 @@
 ### END INIT INFO
 
 
-APP_ROOT="/home/seafile/seafile/seafile-server-1.4.5"
+APP_ROOT="/home/seafile/seafile/seafile-server-1.5.0"
 SEAFILE_PID="/tmp/seafile-*server.pid"
 SEAHUB_PID="$APP_ROOT/runtime/seahub.pid"
 STOP_SEAFILE="$APP_ROOT/seafile.sh stop"
