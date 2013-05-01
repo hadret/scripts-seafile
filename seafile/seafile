@@ -2,7 +2,7 @@
 
 # SEAFILE
 # Maintainer: @hadret
-# App Version: 1.6.0
+# App Version: 1.6.1
 
 ### BEGIN INIT INFO
 # Provides:          seafile
@@ -15,8 +15,8 @@
 ### END INIT INFO
 
 
-APP_ROOT="/home/seafile/seafile/seafile-server-1.6.0"
-SEAFILE_PID="/tmp/seafile-*server.pid"
+APP_ROOT="/home/seafile/seafile/seafile-server-1.6.1"
+SEAFILE_PID="$APP_ROOT/../seafile-data/pids/seaf-server.pid"
 SEAHUB_PID="$APP_ROOT/runtime/seahub.pid"
 STOP_SEAFILE="$APP_ROOT/seafile.sh stop"
 START_SEAFILE="$APP_ROOT/seafile.sh start"
@@ -60,8 +60,6 @@ stop() {
     sudo -u seafile -H bash -l -c "$STOP_SEAHUB"
     sleep 5
     sudo -u seafile -H bash -l -c "$STOP_SEAFILE"
-    ## Remove PIDs.
-    rm /tmp/seafile*.pid >> /dev/null
     echo "$DESC stopped"
   else
     ## Program is not running, exit with error.
@@ -78,7 +76,6 @@ restart() {
     sudo -u seafile -H bash -l -c "$STOP_SEAHUB"
     sleep 5
     sudo -u seafile -H bash -l -c "$STOP_SEAFILE"
-    rm /tmp/seafile*.pid >> /dev/null
     if [ `whoami` = root ]; then
       sudo -u seafile -H bash -l -c "$START_SEAFILE"
       sudo -u seafile -H bash -l -c "$START_SEAHUB"
