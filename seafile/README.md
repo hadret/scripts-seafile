@@ -14,9 +14,9 @@ Fairly straight-forward. If you need latest available release, type:
     sudo chmod +x /etc/init.d/seafile
     sudo update-rc.d seafile defaults 21
 
-If you are aiming into some particular version, check out available [branches](https://github.com/hadret/Scripts/branches) and modify link accordingly. Here's an example for stable-1.6.0 branch:
+If you are aiming into some particular version, check out available [branches](https://github.com/hadret/Scripts/branches) and modify link accordingly. Here's an example for stable-1.6.1 branch:
 
-    sudo wget https://github.com/hadret/Scripts/raw/stable-1.6.0/seafile/seafile -O /etc/init.d/seafile
+    sudo wget https://github.com/hadret/Scripts/raw/stable-1.6.1/seafile/seafile -O /etc/init.d/seafile
 
 * * *
 
