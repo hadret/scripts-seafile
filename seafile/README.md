@@ -24,5 +24,6 @@ AUTHORS
 =======
 
 * Filip "Hadret" Chabik <hadret@gmail.com>
+* [itsme-](https://github.com/itsme-)
 
 _(Remember to add yourself when pull requesting)._
