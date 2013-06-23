@@ -16,7 +16,7 @@
 
 
 APP_ROOT="/home/seafile/seafile/seafile-server-1.7.0"
-SEAFILE_PID="$APP_ROOT/../seafile-data/pids/seaf-server.pid"
+SEAFILE_PID="/home/seafile/data/pids/seaf-server.pid"
 SEAHUB_PID="$APP_ROOT/runtime/seahub.pid"
 STOP_SEAFILE="$APP_ROOT/seafile.sh stop"
 START_SEAFILE="$APP_ROOT/seafile.sh start"
